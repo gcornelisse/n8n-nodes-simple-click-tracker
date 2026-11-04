@@ -1,0 +1,7 @@
+node_modules/
+dist/
+*.log
+*.tsbuildinfo
+
+# The root .gitignore excludes lockfiles, but the publish workflow needs this one for npm ci.
+!package-lock.json

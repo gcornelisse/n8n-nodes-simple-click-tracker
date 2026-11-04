@@ -1,0 +1,55 @@
+{
+	"name": "n8n-nodes-simple-click-tracker",
+	"version": "0.1.0",
+	"description": "n8n nodes for Simple Click Tracker: react to broken links, split-test winners and click milestones, and create, update or find short links.",
+	"license": "MIT",
+	"homepage": "https://simpleclicktracker.com",
+	"keywords": [
+		"n8n-community-node-package",
+		"simple-click-tracker",
+		"link-tracking",
+		"short-links"
+	],
+	"author": {
+		"name": "Simple Click Tracker",
+		"email": "support@simpleclicktracker.com"
+	},
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/gcornelisse/n8n-nodes-simple-click-tracker.git"
+	},
+	"scripts": {
+		"build": "n8n-node build",
+		"build:watch": "tsc --watch",
+		"dev": "n8n-node dev",
+		"test": "node --test test/*.test.mjs",
+		"lint": "n8n-node lint",
+		"lint:fix": "n8n-node lint --fix",
+		"release": "n8n-node release",
+		"prepublishOnly": "n8n-node prerelease"
+	},
+	"files": [
+		"dist"
+	],
+	"n8n": {
+		"n8nNodesApiVersion": 1,
+		"strict": true,
+		"credentials": [
+			"dist/credentials/SimpleClickTrackerApi.credentials.js"
+		],
+		"nodes": [
+			"dist/nodes/SimpleClickTracker/SimpleClickTracker.node.js",
+			"dist/nodes/SimpleClickTracker/SimpleClickTrackerTrigger.node.js"
+		]
+	},
+	"devDependencies": {
+		"@n8n/node-cli": "0.55.4",
+		"eslint": "9.32.0",
+		"prettier": "3.6.2",
+		"release-it": "^21.1.0",
+		"typescript": "5.9.2"
+	},
+	"peerDependencies": {
+		"n8n-workflow": "*"
+	}
+}

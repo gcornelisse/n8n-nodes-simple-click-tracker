@@ -1,0 +1,43 @@
+# Runs in the public GitHub repo that holds only this folder. Publishing from GitHub Actions with
+# provenance is what n8n requires. Based on the template from @n8n/node-cli.
+#
+# To release, run `npm run release` on main. It bumps the version, then pushes a tag like 0.2.0, which starts this workflow.
+#
+# npm sign-in: the first publish needs an NPM_TOKEN repository secret, because the package doesn't exist on npm yet.
+# After that, add this workflow as a Trusted Publisher in the package's npm settings (filename: publish.yml)
+# and delete the secret.
+name: Publish
+
+on:
+  push:
+    tags:
+      - '*.*.*'
+
+jobs:
+  publish:
+    name: Publish to npm
+    runs-on: ubuntu-latest
+
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          # Node 24 brings npm 11, which Trusted Publishing needs. package-lock.json is generated with the same version.
+          node-version: 24
+          cache: npm
+
+      # Install scripts only compile isolated-vm, a dependency of n8n-workflow that building this package doesn't use.
+      - run: npm ci --ignore-scripts
+
+      # In GitHub Actions, this lints, builds and publishes with provenance.
+      - name: Release
+        run: |
+          [ -n "$NPM_TOKEN" ] && npm config set //registry.npmjs.org/:_authToken "$NPM_TOKEN"
+          npm run release
+        env:
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
