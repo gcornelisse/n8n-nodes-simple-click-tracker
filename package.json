@@ -16,7 +16,10 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/gcornelisse/n8n-nodes-simple-click-tracker.git"
+		"url": "git+https://github.com/gcornelisse/n8n-nodes-simple-click-tracker.git"
+	},
+	"publishConfig": {
+		"access": "public"
 	},
 	"scripts": {
 		"build": "n8n-node build",
