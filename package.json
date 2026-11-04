@@ -1,6 +1,6 @@
 {
 	"name": "n8n-nodes-simple-click-tracker",
-	"version": "0.1.0",
+	"version": "0.1.1",
 	"description": "n8n nodes for Simple Click Tracker: react to broken links, split-test winners and click milestones, and create, update or find short links.",
 	"license": "MIT",
 	"homepage": "https://simpleclicktracker.com",
