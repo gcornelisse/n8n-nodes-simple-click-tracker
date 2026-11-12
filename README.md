@@ -30,6 +30,23 @@ When you test the trigger, Simple Click Tracker sends a sample event within abou
 - **Update Link Destination**: changes where a standard link sends visitors.
 - **Find Link**: finds links by exact path, part of the name, or both.
 
+Turn on **Simplify** to return only `id`, `name`, `type`, `url`, `path`, `short_url`, `total_clicks` and `unique_clicks`.
+
+## Example workflow
+
+Post a Slack message when a link stops working:
+
+1. Add a **Simple Click Tracker Trigger** node and set **Event** to **Broken Link Found**. Leave **Link** empty to watch every link.
+2. Listen for a test event. Simple Click Tracker sends a sample within about a minute.
+3. Add a Slack node and build the message from the event's fields:
+
+   ```
+   {{ $json.link.name }} is broken: {{ $json.reason }}
+   Short link: {{ $json.link.short_url }}
+   ```
+
+4. Save the workflow and turn it on.
+
 ## Help
 
 Full guide: [Simple Click Tracker help: n8n](https://app.simpleclicktracker.com/help/n8n).

@@ -8,6 +8,18 @@ import type {
 import { NodeConnectionTypes, NodeOperationError } from 'n8n-workflow';
 import { apiRequest, getDomains, getGroups, searchLinks } from './GenericFunctions';
 
+const SIMPLIFIED_LINK_FIELDS = ['id', 'name', 'type', 'url', 'path', 'short_url', 'total_clicks', 'unique_clicks'];
+
+function simplifyLink(link: IDataObject): IDataObject {
+	const simplified: IDataObject = {};
+	for (const field of SIMPLIFIED_LINK_FIELDS) {
+		if (field in link) {
+			simplified[field] = link[field];
+		}
+	}
+	return simplified;
+}
+
 export class SimpleClickTracker implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Simple Click Tracker',
@@ -136,6 +148,13 @@ export class SimpleClickTracker implements INodeType {
 				description:
 					'The group to add the link to. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 			},
+			{
+				displayName: 'Simplify',
+				name: 'simplify',
+				type: 'boolean',
+				default: false,
+				description: 'Whether to return a simplified version of the response instead of the raw data',
+			},
 		],
 	};
 
@@ -175,6 +194,10 @@ export class SimpleClickTracker implements INodeType {
 						name: this.getNodeParameter('findName', i, ''),
 						domain_id: this.getNodeParameter('domainId', i, ''),
 					})) as IDataObject[];
+				}
+
+				if (this.getNodeParameter('simplify', i, false) as boolean) {
+					result = Array.isArray(result) ? result.map(simplifyLink) : simplifyLink(result);
 				}
 
 				returnData.push(

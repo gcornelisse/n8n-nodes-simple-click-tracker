@@ -148,6 +148,41 @@ test('find returns one item per link', async () => {
 	assert.equal(output[0].length, 2);
 });
 
+test('simplify keeps the main link fields, and full output is the default', async () => {
+	const simplify = new SimpleClickTracker().description.properties.find((property) => property.name === 'simplify');
+	assert.equal(simplify?.type, 'boolean');
+	assert.equal(simplify?.default, false);
+
+	const link = {
+		id: 1,
+		name: 'Sale',
+		type: 'standard',
+		url: 'https://example.com',
+		path: 'sale',
+		domain_id: 2,
+		domain: 'go.test',
+		group_id: 3,
+		short_url: 'https://go.test/sale',
+		is_archived: false,
+		total_clicks: 10,
+		unique_clicks: 8,
+	};
+	const full = await run({ operation: 'find', findPath: 'sale' }, () => [link]);
+	assert.deepEqual(full.output[0][0].json, link);
+
+	const simple = await run({ operation: 'find', findPath: 'sale', simplify: true }, () => [link]);
+	assert.deepEqual(simple.output[0][0].json, {
+		id: 1,
+		name: 'Sale',
+		type: 'standard',
+		url: 'https://example.com',
+		path: 'sale',
+		short_url: 'https://go.test/sale',
+		total_clicks: 10,
+		unique_clicks: 8,
+	});
+});
+
 test("the server's plain-language error reaches the user", async () => {
 	const failure = Object.assign(new Error('Request failed with status code 422'), {
 		response: { status: 422, data: { error: { message: "You've reached your plan's link limit." } } },
