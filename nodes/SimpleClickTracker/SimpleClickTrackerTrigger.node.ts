@@ -54,6 +54,12 @@ export class SimpleClickTrackerTrigger implements INodeType {
 						description: 'A destination that was broken passed a later check',
 					},
 					{
+						name: 'New Conversion',
+						value: 'conversion.recorded',
+						description:
+							'A link recorded a new sale or sign-up, with the amount and ad click IDs such as the Google GCLID',
+					},
+					{
 						name: 'Split-Test Winner Picked',
 						value: 'split.winner',
 						description: 'A split test has a winner',

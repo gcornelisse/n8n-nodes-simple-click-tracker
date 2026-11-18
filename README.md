@@ -4,7 +4,7 @@
 
 ## Installation
 
-In n8n, open **Settings > Community Nodes > Install** and enter `n8n-nodes-simple-click-tracker`. See n8n's [community node installation guide](https://docs.n8n.io/integrations/community-nodes/installation/).
+This is a verified community node, available on n8n Cloud and self-hosted n8n. In a workflow, open the nodes panel, search for **Simple Click Tracker** and click **Install**. On self-hosted n8n you can also open **Settings > Community Nodes > Install** and enter `n8n-nodes-simple-click-tracker`. See n8n's [community node installation guide](https://docs.n8n.io/integrations/community-nodes/installation/).
 
 ## Credentials
 
@@ -19,6 +19,7 @@ In n8n, open **Settings > Community Nodes > Install** and enter `n8n-nodes-simpl
 | Link Working Again | A destination that was broken passed a later check |
 | Split-Test Winner Picked | A split test has a winner |
 | Click Milestone Reached | A link first reached the click count you set |
+| New Conversion | A link recorded a new sale or sign-up. Includes the amount and ad click IDs such as the Google GCLID |
 
 Triggers need an n8n address that Simple Click Tracker can reach: a public `https://` address. On a self-hosted instance, set it in `WEBHOOK_URL`. The action node works without one.
 
